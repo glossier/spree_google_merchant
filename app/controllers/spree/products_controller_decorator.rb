@@ -8,7 +8,7 @@ module Spree
           @items.collect(&:product).uniq.sort_by(&:id)
         )
       else
-        @items = Product.active.includes(:variants)
+        @items = Product.active.where.not(restricted: true).includes(:variants)
         @properties = GoogleMerchant::Manager.property_set(@items)
       end
       respond_to do |format|
